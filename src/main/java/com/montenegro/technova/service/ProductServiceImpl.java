@@ -10,6 +10,7 @@ import com.montenegro.technova.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -100,4 +101,23 @@ public class ProductServiceImpl implements ProductService {
        .map(productMapper::toResponse)
        .toList();
   }
+
+  @Override
+  public long getTotalProducts() {
+    return productRepository.count();
+  }
+
+  @Override
+  public int getTotalStock() {
+    return productRepository.findAll()
+       .stream()
+       .mapToInt(p -> p.getStock())
+       .sum();
+  }
+
+  @Override
+  public long getTotalCategories() {
+    return Arrays.stream(Category.values()).count();
+  }
+
 }

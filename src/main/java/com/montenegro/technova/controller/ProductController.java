@@ -1,16 +1,15 @@
 package com.montenegro.technova.controller;
 
 import com.montenegro.technova.dto.ProductRequestDto;
-import com.montenegro.technova.service.ProductService;
 import com.montenegro.technova.model.Category;
+import com.montenegro.technova.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,19 +18,24 @@ public class ProductController {
 
   private final ProductService productService;
 
+  // LIST PRODUCTS
   @GetMapping
   public String listProducts(Model model) {
     model.addAttribute("products", productService.getAllProducts());
+    model.addAttribute("activePage", "products");
     return "products/list";
   }
 
+  // SHOW CREATE FORM
   @GetMapping("/create")
   public String showCreateForm(Model model) {
     model.addAttribute("product", new ProductRequestDto());
     model.addAttribute("categories", Category.values());
+    model.addAttribute("activePage", "products");
     return "products/create";
   }
 
+  // CREATE PRODUCT
   @PostMapping("/create")
   public String createProduct(
      @Valid @ModelAttribute("product") ProductRequestDto dto,
@@ -41,6 +45,7 @@ public class ProductController {
   ) {
     if (result.hasErrors()) {
       model.addAttribute("categories", Category.values());
+      model.addAttribute("activePage", "products");
       return "products/create";
     }
 
@@ -49,6 +54,7 @@ public class ProductController {
     return "redirect:/products";
   }
 
+  // SHOW EDIT FORM
   @GetMapping("/edit/{id}")
   public String showEditForm(@PathVariable Long id, Model model) {
     var product = productService.getProductById(id);
@@ -67,9 +73,11 @@ public class ProductController {
     model.addAttribute("product", dto);
     model.addAttribute("productId", id);
     model.addAttribute("categories", Category.values());
+    model.addAttribute("activePage", "products");
     return "products/edit";
   }
 
+  // UPDATE PRODUCT
   @PostMapping("/edit/{id}")
   public String updateProduct(
      @PathVariable Long id,
@@ -80,6 +88,7 @@ public class ProductController {
   ) {
     if (result.hasErrors()) {
       model.addAttribute("categories", Category.values());
+      model.addAttribute("activePage", "products");
       return "products/edit";
     }
 
@@ -88,6 +97,7 @@ public class ProductController {
     return "redirect:/products";
   }
 
+  // DELETE PRODUCT
   @GetMapping("/delete/{id}")
   public String deleteProduct(@PathVariable Long id) {
     productService.deleteProduct(id);

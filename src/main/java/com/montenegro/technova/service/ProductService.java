@@ -21,4 +21,12 @@ public interface ProductService {
   List<ProductResponseDto> getProductsByCategory(Category category);
 
   List<ProductResponseDto> searchProductsByName(String name);
+
+  // MÉTRICAS PARA EL DASHBOARD
+  long getTotalProducts();
+
+  int getTotalStock();
+
+  long getTotalCategories();
 }
+

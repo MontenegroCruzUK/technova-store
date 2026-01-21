@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (pageTitle, activePage, content)">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title th:text="${pageTitle}">TechNova Store</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Dashboard CSS -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/">
+        TechNova Store
+    </a>
+
+    <ul class="navbar-nav flex-row d-md-none">
+        <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                <i class="bi bi-list"></i>
+            </button>
+        </li>
+    </ul>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+            <div class="offcanvas-md offcanvas-end bg-body-tertiary"
+                 tabindex="-1" id="sidebarMenu">
+
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title">TechNova Store</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+
+                <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2"
+                               th:classappend="${activePage == 'dashboard'} ? ' active' : ''"
+                               href="/dashboard">
+                                <i class="bi bi-house-fill"></i>
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2"
+                               th:classappend="${activePage == 'products'} ? ' active' : ''"
+                               href="/products">
+                                <i class="bi bi-cart"></i>
+                                Products
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <hr class="my-3">
+
+                    <ul class="nav flex-column mb-auto">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2" href="#">
+                                <i class="bi bi-gear-wide-connected"></i>
+                                Settings
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2" href="#">
+                                <i class="bi bi-door-closed"></i>
+                                Sign out
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div th:replace="${content}"></div>
+        </main>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"></script>
+
+<!-- Dashboard JS -->
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>
